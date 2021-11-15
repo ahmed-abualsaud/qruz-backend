@@ -1,0 +1,44 @@
+input CreateSchoolTripStationInput {
+  name: String
+  name_ar: String
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+  trip_id: ID
+  state: String @rules(apply: ["in:START,END,PICKABLE,PENDING,DESTINATION"])
+  request_id: ID
+  accepted_at: String
+}
+
+input UpdateSchoolTripStationInput {
+  id: ID! @rules(apply: ["required"])
+  trip_id: ID
+  name: String
+  name_ar: String
+  latitude: Float
+  longitude: Float
+  state: String
+  accepted_at: String
+}
+
+input AcceptSchoolTripStationInput {
+  trip_id: ID! @rules(apply: ["required"])
+  station_id: ID! @rules(apply: ["required"])
+  station_name: String! @rules(apply: ["required"])
+  station_name_ar: String! @rules(apply: ["required"])
+}
+
+type SchoolTripStation {
+  id: ID
+  name: String
+  name_ar: String
+  latitude: Float
+  longitude: Float
+  created_at: String
+  accepted_at: String
+  state: String
+  distance: Int
+  duration: Int
+  is_my_station: Boolean
+  is_my_destination: Boolean
+  students: [Student] @belongsToMany
+}

@@ -1,0 +1,45 @@
+input CreateSeatsLineStationInput {
+  name: String! @rules(apply: ["required"])
+  name_ar: String
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+  line_id: ID! @rules(apply: ["required"])
+  state: String @rules(apply: ["in:START,END,PICKABLE"])
+} 
+
+input UpdateSeatsLineStationInput {
+  id: ID! @rules(apply: ["required"])
+  name: String
+  name_ar: String
+  latitude: Float
+  longitude: Float
+  state: String @rules(apply: ["in:START,END,PICKABLE"])
+} 
+
+type SeatsLineStation {
+  id: ID
+  name: String
+  name_ar: String
+  latitude: Float
+  longitude: Float
+  state: String
+  distance: Int
+  duration: Int
+}
+
+type SeatsNearbyStation {
+  trip_id: ID
+  trip_time: String
+  price: Float
+  bookable: Boolean
+  pickup_id: ID
+  pickup_name: String
+  pickup_name_ar: String
+  pickup_time: String
+  pickup_distance: Float
+  dropoff_id: ID
+  dropoff_name: String
+  dropoff_name_ar: String
+  dropoff_time: String
+  dropoff_distance: Float
+}

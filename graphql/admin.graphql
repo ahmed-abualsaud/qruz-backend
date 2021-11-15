@@ -1,0 +1,33 @@
+input CreateAdminInput {
+  name: String! @rules(apply: ["required"])
+  email: String @rules(apply: ["email", "unique:admins,email"])
+  phone: String! @rules(apply: ["required", "unique:admins,phone"])
+  role_id: ID! @rules(apply: ["required"])
+  avatar: Upload
+}
+
+input UpdateAdminInput @validator {
+  id: ID
+  role_id: ID
+  name: String
+  email: String
+  phone: String
+  avatar: Upload
+}
+
+type AdminAuthPayload {
+  access_token: String
+  admin: Admin
+}
+
+type Admin {
+  id: ID
+  name: String
+  email: String
+  phone: String
+  avatar: String
+  employee_id: String
+  status: String
+  role: Role @belongsTo
+  is_super_admin: Boolean
+}

@@ -1,0 +1,53 @@
+input ChangeBusinessTripPickupStatusInput {
+  trip_id: ID! @rules(apply: ["required"])
+  trip_name: String! @rules(apply: ["required"])
+  user_id: ID! @rules(apply: ["required"])
+  user_name: String! @rules(apply: ["required"])
+  is_picked_up: Boolean! @rules(apply: ["required"])
+  log_id: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+  driver_id: ID! @rules(apply: ["required"])
+}
+
+input ChangeBusinessTripAttendanceStatusInput {
+  date: String! @rules(apply: ["required"])
+  trip_id: ID! @rules(apply: ["required"])
+  trip_name: String! @rules(apply: ["required"])
+  user_id: ID! @rules(apply: ["required"])
+  user_name: String! @rules(apply: ["required"])
+  is_absent: Boolean! @rules(apply: ["required"])
+  log_id: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+  driver_id: ID! @rules(apply: ["required"])
+  by: String! @rules(apply: ["required", "in:driver,user"])
+}
+
+input SelectBusinessTripUsersInput {
+  trip_id: ID! @rules(apply: ["required"])
+  trip_name: String! @rules(apply: ["required"])
+  trip_time: String! @rules(apply: ["required"])
+  driver_id: ID! @rules(apply: ["required"])
+  log_id: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+  users: [UserObj] @rules(apply: ["required"])
+}
+
+input UserObj {
+  id: ID! @rules(apply: ["required"])
+  name: String! @rules(apply: ["required"])
+}
+
+type BusinessTripEvent {
+  log_id: String
+  trip_time: String
+  map_url: String
+  content: TripEventContent
+  created_at: String
+  updated_at: String
+  trip: BusinessTrip @belongsTo
+  driver: Driver @belongsTo
+  supervisor: Supervisor @belongsTo
+}

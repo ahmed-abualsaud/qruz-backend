@@ -1,0 +1,83 @@
+input CreateSeatsTripAppTransactionInput {
+  trx_id: ID
+  booking_id: ID! @rules(apply: ["required"])
+  trip_id: ID! @rules(apply: ["required"])
+  user_id: ID! @rules(apply: ["required"])
+  amount: Float! @rules(apply: ["required"])
+  payment_method: String! @rules(apply: ["required","in:CASH,CARD,FAWRY"])
+  notes: String
+}
+
+input CreateSeatsTripPosTransactionInput {
+  trx_id: ID
+  partner_id: ID! @rules(apply: ["required"])
+  driver_id: ID! @rules(apply: ["required"])
+  vehicle_id: ID! @rules(apply: ["required"])
+  tickets: Int! @rules(apply: ["required"])
+  amount: Float! @rules(apply: ["required"])
+}
+
+input UpdateSeatsTripTerminalTransactionInput {
+  id: ID! @rules(apply: ["required"])
+  amount: Float! @rules(apply: ["required"])
+}
+
+type SeatsTripAppTransaction {
+  id: ID
+  trx_id: ID
+  booking_id: ID
+  trip: SeatsTrip @belongsTo
+  trip_time: String
+  user: User @belongsTo
+  amount: Float
+  payment_method: String
+  notes: String
+  created_by: String
+  created_at: String
+}
+
+type SeatsTripPosTransaction {
+  id: ID
+  trx_id: ID
+  serial: Int
+  driver: Driver @belongsTo
+  vehicle: Vehicle @belongsTo
+  amount: Float
+  created_at: String
+}
+
+type SeatsTripTerminalTransaction {
+  id: ID
+  trx_id: ID
+  terminal_id: ID
+  amount: Float
+  source: String
+  status: String
+  created_at: String
+}
+
+type SeatsTripTransactionStats {
+  count: Int
+  sum: Float
+  avg: Float
+  transactions: [TransactionsGroup]
+}
+
+type SeatsTripTransactionVehiclesStats {
+  license_plate: String
+  code: String
+  terminal_id: Int
+  count: Int
+  sum: Float
+}
+
+type SeatsTripTransactionTimeStats {
+  time: String
+  count: Int
+  sum: Float
+}
+
+type TransactionsGroup {
+  date: String
+  sum: Float
+}

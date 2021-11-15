@@ -1,0 +1,50 @@
+input InviteBusinessTripUserInput {
+  trip_id: ID! @rules(apply: ["required"])
+  user_id: [ID!]! @rules(apply: ["required"])
+  trip_name: String! @rules(apply: ["required"])
+  subscription_code: String! @rules(apply: ["required"])
+}
+
+input CreateBusinessTripSubscriptionInput {
+  trip_id: ID! @rules(apply: ["required"])
+  user_id: [ID!]! @rules(apply: ["required"])
+  station_id: ID! @rules(apply: ["required"])
+  destination_id: ID! @rules(apply: ["required"])
+  payable: Float! @rules(apply: ["required"])
+  due_date: String
+}
+
+input DeleteBusinessTripSubscriptionInput {
+  trip_id: ID! @rules(apply: ["required"])
+  user_id: [ID!]! @rules(apply: ["required"])
+} 
+
+input ConfirmBusinessTripSubscriptionInput {
+  user_id: ID! @rules(apply: ["required"])
+  subscription_code: String! @rules(apply: ["required"])
+} 
+
+input VerifyBusinessTripSubscriptionInput {
+  user_id: ID! @rules(apply: ["required"])
+  trip_id: ID! @rules(apply: ["required"])
+  subscription_verified_at: String @rules(apply: ["required"])
+}
+
+input AssignBusinessTripStationUserInput {
+  trip_id: ID! @rules(apply: ["required"])
+  user_id: ID! @rules(apply: ["required"])
+  station_id: ID! @rules(apply: ["required"])
+  destination_id: ID! @rules(apply: ["required"])
+}
+
+type BusinessTripSubscription {
+  id: ID
+  user: User @belongsTo
+  trip: BusinessTrip @belongsTo
+  pickup: BusinessTripStation @belongsTo
+  dropoff: BusinessTripStation @belongsTo
+  payable: Float
+  due_date: String
+  subscription_verified_at: String
+  created_at: String
+}

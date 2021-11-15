@@ -1,0 +1,35 @@
+input SendDirectMessageInput {
+  recipient_id: [ID!]! @rules(apply: ["required"])
+  recipient_type: String! @rules(apply: ["required","in:App\\User,App\\Driver"])
+  all: Boolean
+  email: Boolean! @rules(apply: ["required"])
+  sms: Boolean! @rules(apply: ["required"])
+  push: Boolean! @rules(apply: ["required"])
+  title: String! @rules(apply: ["required"])
+  message: String! @rules(apply: ["required"])
+}
+
+input SendBusinessTripChatMessageInput {
+  sender_type: String! @rules(apply: ["required"])
+  sender_id: ID! @rules(apply: ["required"])
+  trip_id: ID! @rules(apply: ["required"])
+  trip_name: String! @rules(apply: ["required"])
+  log_id: String! @rules(apply: ["required"])
+  message: String! @rules(apply: ["required"])
+  driver_id: ID
+  recipient_id: ID
+}
+
+type BusinessTripChat {
+  id: ID
+  message: String
+  created_at: String
+  time: String
+  sender_type: String
+  sender: Sender!
+}
+
+type Sender {
+  id: ID
+  name: String
+}

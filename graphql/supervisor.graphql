@@ -1,0 +1,27 @@
+input CreateSupervisorInput {
+  partner_id: ID! @rules(apply: ["required"])
+  name: String! @rules(apply: ["required"])
+  name_ar: String! @rules(apply: ["required"])
+  phone: String! @rules(apply: ["required","unique:supervisors,phone"])
+  avatar: Upload
+}
+
+input UpdateSupervisorInput @validator {
+  id: ID
+  partner_id: ID
+  name: String
+  name_ar: String
+  phone: String
+  avatar: Upload
+}
+
+type Supervisor {
+  id: ID
+  partner: Partner @belongsTo
+  name: String
+  name_ar: String
+  phone: String
+  avatar: String
+  documents: [Document] @morphMany
+  created_at: String
+}

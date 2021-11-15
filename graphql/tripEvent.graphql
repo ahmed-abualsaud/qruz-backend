@@ -1,0 +1,56 @@
+input ReadyTripInput {
+  trip_id: ID! @rules(apply: ["required"])
+  trip_time: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])}
+
+input StartTripInput {
+  trip_id: ID! @rules(apply: ["required"])
+  trip_time: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+}
+
+input AtTripStationInput {
+  eta: String! @rules(apply: ["required"])
+  station_id: ID! @rules(apply: ["required"])
+  station_name: String! @rules(apply: ["required"])
+  trip_id: ID! @rules(apply: ["required"])
+  trip_name: String! @rules(apply: ["required"])
+  log_id: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+}
+
+input EndTripInput {
+  trip_id: ID! @rules(apply: ["required"])
+  log_id: String
+  latitude: Float
+  longitude: Float
+}
+
+input UpdateTripDriverLocationInput {
+  log_id: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+}
+
+type TripEventContent {
+  ready: EventObj
+  started: EventObj
+  ended: EventObj
+  payload: [EventObj]
+}
+
+type EventObj {
+  user_id: ID
+  user_name: String
+  station_id: ID
+  station_name: String
+  status: String
+  at: String
+  eta: String
+  by: String
+  lat: Float
+  lng: Float
+}

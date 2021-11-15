@@ -1,0 +1,110 @@
+input CreateUserInput {
+  name: String! @rules(apply: ["required"])
+  email: String @rules(apply: ["email", "unique:users,email"])
+  phone: String @rules(apply: ["unique:users,phone"])
+  password: String
+  provider: String
+  provider_id: String
+  partner_id: ID
+  trip_id: ID
+  title: String
+  avatar: Upload
+  platform: String @rules(apply: ["in:android,ios"])
+  device_id: String
+  ref_code: String
+  payable: Float
+}
+
+input CreateMultipleUsersInput {
+  partner_id: ID
+  trip_id: ID
+  payable: Float
+  users: [UserFromFileInput]! @rules(apply: ["required"])
+}
+
+input UserFromFileInput {
+  name: String! @rules(apply: ["required"])
+  phone: String! @rules(apply: ["required"])
+}
+
+input UpdateUserInput @validator {
+  id: ID
+  name: String
+  email: String
+  phone: String
+  emergency_no: String
+  secondary_no: String
+  title: String
+  avatar: Upload
+  phone_verified_at: String
+  device_id: String
+  wallet_balance: Float
+}
+
+input UserPhoneVerificationInput {
+  phone: String! @rules(apply: ["required"])
+}
+
+type UserPayload {
+  access_token: String
+  user: User
+}
+
+type UserPhoneVerifyPayload {
+  verificationCode: String
+}
+
+type User {
+  id: ID
+  name: String
+  email: String
+  phone: String
+  emergency_no: String
+  secondary_no: String
+  avatar: String
+  title: String
+  partner_id: ID
+  payment_method: String
+  latitude: Float
+  longitude: Float
+  wallet_balance: Float
+  insurance_balance: Float
+  rating: Float
+  ref_code: String
+  created_at: String
+  updated_at: String
+  device_id: String
+  partner: Partner @belongsTo
+  phone_verified_at: String
+  is_absent: Boolean
+  is_picked_up: Boolean
+  station_type: String
+}
+
+type BusinessTripSubbedUser {
+  id: ID
+  name: String
+  phone: String
+  avatar: String
+  station_id: ID
+  station_name: String
+  destination_id: ID
+  destination_name: String
+  station_type: String
+  subscription_verified_at: String
+  payable: Float
+  due_date: String
+}
+
+type SeatsTripBookedUser {
+  id: ID
+  name: String
+  phone: String
+  avatar: String
+  wallet_balance: Float
+  payable: Float
+  paid: Float
+  booking_id: ID
+  boarding_pass: Int
+  seats: Int
+}

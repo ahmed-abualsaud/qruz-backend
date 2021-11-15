@@ -1,0 +1,47 @@
+input CreateSchoolTripFromRequestInput {
+  name: String! @rules(apply: ["required"])
+  name_ar: String! @rules(apply: ["required"])
+  user_id: ID! @rules(apply: ["required"])
+  partner_id: ID! @rules(apply: ["required"])
+  driver_id: ID
+  supervisor_id: ID
+  vehicle_id: ID
+  start_date: String! @rules(apply: ["required"])
+  end_date: String! @rules(apply: ["required"])
+  days: TripDaysInput! @rules(apply: ["required"])
+  return_time: String
+  group_chat: Boolean
+  request_ids: [ID]! @rules(apply: ["required"])
+  destinations: [SchoolTripDestinationsInput]! @rules(apply: ["required"])
+  students: [SchoolTripStudentsInput]! @rules(apply: ["required"])
+  price: Float
+}
+
+input AddRequestToSchoolTripInput {
+  trip_id: ID! @rules(apply: ["required"])
+  user_id: ID! @rules(apply: ["required"])
+  request_ids: [ID]! @rules(apply: ["required"])
+  destinations: [SchoolTripDestinationsInput] @rules(apply: ["required"])
+  students: [SchoolTripStudentsInput] @rules(apply: ["required"])
+  days: TripDaysInput! @rules(apply: ["required"])
+  station_id: ID
+  destination_id: ID
+  price: Float
+}
+
+input SchoolTripDestinationsInput {
+  id: ID
+  name: String
+  lat: Float
+  lng: Float
+}
+
+input SchoolTripStudentsInput {
+  id: ID
+  address: String
+  lat: Float
+  lng: Float
+  request_id: ID
+  days: UserDaysInput
+  destination: String
+}

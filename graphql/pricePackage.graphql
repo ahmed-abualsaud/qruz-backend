@@ -1,0 +1,56 @@
+input CreatePricePackageInput {
+  city_id: ID! @rules(apply: ["required"])
+  name: String! @rules(apply: ["required"])
+  price: PriceInput! @rules(apply: ["required"])
+  per: String! @rules(apply: ["required"])
+  order: Int! @rules(apply: ["required"])
+  type: String! @rules(apply: ["required", "in:TOSCHOOL,TOWORK"])
+  description: String
+  description_ar: String
+  photo: Upload
+  is_public: Boolean
+}
+
+input UpdatePricePackageInput {
+  id: ID! @rules(apply: ["required"])
+  city_id: ID
+  name: String
+  price: PriceInput
+  per: String
+  description: String
+  description_ar: String
+  photo: Upload
+  is_public: Boolean
+}
+
+input PriceInput {
+  one_day: String
+  two_days: String
+  three_days: String
+  four_days: String
+  five_days: String
+  six_days: String
+}
+
+type PricePackage {
+  id: ID
+  name: String
+  type: String
+  description: String
+  description_ar: String
+  price: Price
+  per: String
+  photo: String
+  city: City @belongsTo
+  order: Int
+  is_public: Boolean
+}
+
+type Price {
+  one_day: String
+  two_days: String
+  three_days: String
+  four_days: String
+  five_days: String
+  six_days: String
+}

@@ -1,0 +1,117 @@
+input CreateSchoolInput {
+  zone_id: ID
+  name: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+  address: String
+}
+
+input UpdateSchoolInput {
+  id: ID! @rules(apply: ["required"])
+  zone_id: ID
+  name: String
+  latitude: Float
+  longitude: Float
+  address: String
+}
+
+input CreateSchoolGradeInput @validator {
+  name: String
+  school_id: ID! @rules(apply: ["required"])
+}
+
+input UpdateSchoolGradeInput @validator {
+  name: String
+  id: ID! @rules(apply: ["required"])
+  school_id: ID! @rules(apply: ["required"])
+}
+
+input CreateSchoolRequestInput {
+  user_id: ID! @rules(apply: ["required"])
+  city_id: ID! @rules(apply: ["required"])
+  school_id: ID! @rules(apply: ["required"])
+  grade_id: ID
+  level: String @rules(apply: ["in:KG,G1 to G6,G7 to G9,G10 to G12"])
+  price_package_id: ID! @rules(apply: ["required"])
+  student_name: String! @rules(apply: ["required"])
+  contact_phone: String! @rules(apply: ["required"])
+  pickup_lat: Float! @rules(apply: ["required"])
+  pickup_lng: Float! @rules(apply: ["required"])
+  pickup_address: String! @rules(apply: ["required"])
+  days: String! @rules(apply: ["required"])
+  enter_time: String! @rules(apply: ["required"])
+  exit_time: String! @rules(apply: ["required"])
+  comment: String
+  status: String @rules(apply: ["in:ACCEPTED,PENDING,INCOMPLETE"])
+}
+
+input UpdateSchoolRequestInput {
+  id: ID! @rules(apply: ["required"])
+  school_id: ID
+  grade_id: ID
+  level: String @rules(apply: ["in:KG,G1 to G6,G7 to G9,G10 to G12"])
+  price_package_id: ID
+  student_name: String
+  contact_phone: String
+  pickup_lat: Float
+  pickup_lng: Float
+  pickup_address: String
+  days: String
+  enter_time: String
+  exit_time: String
+  status: String @rules(apply: ["in:ACCEPTED,REJECTED,CANCELLED,PENDING,INCOMPLETE"])
+  comment: String
+  response: String
+}
+
+input ChangeSchoolRequestStatusInput {
+  requestIds: [ID!]! @rules(apply: ["required"])
+  status: String! @rules(apply: ["in:PENDING,REJECTED,WAITING,APPROVED,INCOMPLETE"])
+  users: [SchoolRequestStatusUsers]
+  notify: Boolean
+  response: String
+}
+
+input SchoolRequestStatusUsers {
+  requestId: ID! @rules(apply: ["required"])
+  userId: ID! @rules(apply: ["required"])
+}
+
+type School {
+  id: ID
+  name: String
+  latitude: Float
+  longitude: Float
+  address: String
+  zone: Zone @belongsTo
+  grades: [SchoolGrade] @hasMany
+}
+
+type SchoolGrade {
+  id: ID
+  name: String
+}
+
+type SchoolRequest {
+  id: ID
+  city_id: ID
+  user_id: ID
+  user: User @belongsTo
+  school: School @belongsTo
+  grade: SchoolGrade @belongsTo
+  pricePackage: PricePackage @belongsTo
+  level: String
+  student_name: String
+  contact_phone: String
+  pickup_lat: Float
+  pickup_lng: Float
+  pickup_address: String
+  days: String
+  enter_time: String
+  exit_time: String
+  status: String
+  comment: String
+  response: String
+  created_at: String
+  updated_at: String
+}

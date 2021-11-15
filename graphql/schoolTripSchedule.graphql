@@ -1,0 +1,9 @@
+input SchoolTripScheduleInput {
+  trip_id: ID! @rules(apply: ["required"])
+  student_id: ID! @rules(apply: ["required"])
+  days: UserDaysInput! @rules(apply: ["required"])
+}
+
+type SchoolTripSchedule {
+  days: UserDays
+}

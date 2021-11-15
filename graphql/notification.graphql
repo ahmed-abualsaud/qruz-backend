@@ -1,0 +1,12 @@
+type Notification {
+  id: String
+  data: Data
+  read_at: String
+  created_at: String
+}
+
+type Data {
+  trip_id: ID
+  name: String
+  status: String
+}

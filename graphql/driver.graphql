@@ -1,0 +1,64 @@
+input CreateDriverInput {
+  name: String! @rules(apply: ["required"])
+  name_ar: String
+  fleet_id: ID
+  email: String @rules(apply: ["email", "unique:drivers,email"])
+  phone: String @rules(apply: ["unique:drivers,phone"])
+  password: String
+  license_expires_on: String
+  avatar: Upload
+  city: String
+  vehicle: String
+  status: Boolean
+  partner_id: ID
+  code: String
+}
+
+input UpdateDriverInput @validator {
+  id: ID
+  name: String
+  name_ar: String
+  email: String
+  phone: String
+  fleet_id: ID
+  license_expires_on: String
+  avatar: Upload
+  status: Boolean
+  device_id: String
+  partner_id: ID
+  code: String
+}
+
+input DriverVehicleInput {
+  driver_id: ID! @rules(apply: ["required"])
+  vehicle_id: [ID!]! @rules(apply: ["required"])
+}
+
+type DriverAuthPayload {
+  access_token: String
+  driver: Driver
+}
+
+type Driver {
+  id: ID
+  name: String
+  name_ar: String
+  email: String
+  phone: String
+  license_expires_on: String
+  avatar: String
+  latitude: Float
+  longitude: Float
+  rating: Float
+  status: Boolean
+  city: String
+  vehicle: String
+  partner_id: ID
+  code: String
+  created_at: String
+  updated_at: String
+  partners: [Partner] @hasMany
+  trips: [BusinessTrip] @hasMany
+  vehicles: [Vehicle] @hasMany
+  documents: [Document] @morphMany
+}

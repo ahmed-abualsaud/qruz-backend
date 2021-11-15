@@ -1,0 +1,89 @@
+input CreateOndemandRequestInput {
+  user_id: ID! @rules(apply: ["required"])
+  find_people: Boolean
+  contact_phone: String
+  start_date: String! @rules(apply: ["required"])
+  end_date: String! @rules(apply: ["required"])
+  frequency: String @rules(apply: ["in:DAILY,ONE_TIME"])
+  way: String @rules(apply: ["in:ONE_WAY,TWO_WAYS"])
+  classification: String @rules(apply: ["in:EDUCATIONAL,CORPORATE,INDIVIDUAL,GROUP"])
+  comment: String
+  no_of_users: Int
+  lines: [RequestLines!]! @rules(apply: ["required"])
+  vehicles: [RequestVehicles]
+  custom_vehicle: String
+}
+
+input UpdateOndemandRequestInput {
+  id: ID! @rules(apply: ["required"])
+  status: String @rules(apply: ["in:ACCEPTED,REJECTED,CANCELLED,PENDING"])
+  comment: String
+  response: String
+  notify: Boolean
+}
+
+input RequestVehicles {
+  car_type_id: ID! @rules(apply: ["required"])
+  car_model_id: ID! @rules(apply: ["required"])
+  count: Int! @rules(apply: ["required"])
+}
+
+input RequestLines {
+  from_lat: Float! @rules(apply: ["required"])
+  from_lng: Float! @rules(apply: ["required"])
+  to_lat: Float! @rules(apply: ["required"])
+  to_lng: Float! @rules(apply: ["required"])
+  from_address: String
+  to_address: String
+}
+
+type OndemandRequest {
+  id: ID
+  user: User @belongsTo
+  find_people: Boolean
+  contact_phone: String
+  start_date: String
+  end_date: String
+  custom_vehicle: String
+  frequency: String
+  way: String
+  classification: String
+  no_of_users: Int
+  status: String
+  comment: String
+  response: String
+  created_at: String
+  read_at: String
+  deleted_at: String
+  vehicles: [OndemandRequestVehicle] @hasMany
+  lines: [OndemandRequestLine] @hasMany
+  next: ID
+  previous: ID
+}
+
+type OndemandRequestVehicle {
+  id: ID
+  carType: CarType @belongsTo
+  carModel: CarModel @belongsTo
+  count: Int
+}
+
+type OndemandRequestLine {
+  id: ID
+  from_lat: Float
+  from_lng: Float 
+  to_lat: Float
+  to_lng: Float
+  from_address: String
+  to_address: String
+}
+
+type OndemandRequestStats {
+  count: Int
+  requests: [RequestGroup]
+}
+
+type RequestGroup {
+  date: String
+  count: Int
+}

@@ -1,0 +1,47 @@
+input CreateVehicleInput @validator {
+  license_plate: String!
+  license_expires_on: String! @rules(apply: ["required"])
+  car_type_id: ID! @rules(apply: ["required"])
+  car_make_id: ID! @rules(apply: ["required"])
+  car_model_id: ID! @rules(apply: ["required"])
+  year: Int! @rules(apply: ["required", "min:4", "max:4"])
+  seats: Int! @rules(apply: ["required"])
+  photo: Upload
+  partner_id: ID
+  terminal_id: ID
+  device_id: ID
+  code: String
+}
+
+input UpdateVehicleInput @validator {
+  id: ID
+  license_plate: String
+  license_expires_on: String
+  car_type_id: ID
+  car_make_id: ID
+  car_model_id: ID
+  year: Int @rules(apply: ["min:4", "max:4"])
+  seats: Int
+  photo: Upload
+  partner_id: ID
+  terminal_id: ID
+  device_id: ID
+  code: String
+}
+
+type Vehicle {
+  id: ID
+  license_plate: String
+  license_expires_on: String
+  type: CarType @belongsTo
+  make: CarMake @belongsTo
+  model: CarModel @belongsTo
+  year: Int
+  seats: Int
+  photo: String
+  partner_id: ID
+  terminal_id: ID
+  device_id: ID
+  code: String
+  documents: [Document] @morphMany
+}

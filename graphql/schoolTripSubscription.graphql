@@ -1,0 +1,45 @@
+input CreateSchoolTripSubscriptionInput {
+  trip_id: ID! @rules(apply: ["required"])
+  student_id: [ID!]! @rules(apply: ["required"])
+  user_id: [ID!]! @rules(apply: ["required"])
+  station_id: ID! @rules(apply: ["required"])
+  destination_id: ID! @rules(apply: ["required"])
+  payable: Float! @rules(apply: ["required"])
+  due_date: String
+}
+
+input DeleteSchoolTripSubscriptionInput {
+  trip_id: ID! @rules(apply: ["required"])
+  student_id: [ID!]! @rules(apply: ["required"])
+} 
+
+input ConfirmSchoolTripSubscriptionInput {
+  student_id: ID! @rules(apply: ["required"])
+  subscription_code: String! @rules(apply: ["required"])
+} 
+
+input VerifySchoolTripSubscriptionInput {
+  student_id: ID! @rules(apply: ["required"])
+  trip_id: ID! @rules(apply: ["required"])
+  subscription_verified_at: String @rules(apply: ["required"])
+}
+
+input AssignSchoolTripStationStudentInput {
+  trip_id: ID! @rules(apply: ["required"])
+  student_id: ID! @rules(apply: ["required"])
+  station_id: ID! @rules(apply: ["required"])
+  destination_id: ID! @rules(apply: ["required"])
+  user_id: ID!
+}
+
+type SchoolTripSubscription {
+  id: ID
+  student: Student @belongsTo
+  trip: SchoolTrip @belongsTo
+  pickup: SchoolTripStation @belongsTo
+  dropoff: SchoolTripStation @belongsTo
+  payable: Float
+  due_date: String
+  subscription_verified_at: String
+  created_at: String
+}

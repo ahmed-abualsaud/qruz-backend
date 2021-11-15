@@ -1,0 +1,53 @@
+input ChangeSchoolTripPickupStatusInput {
+  trip_id: ID! @rules(apply: ["required"])
+  trip_name: String! @rules(apply: ["required"])
+  students: [StudnetObj] @rules(apply: ["required"])
+  is_picked_up: Boolean! @rules(apply: ["required"])
+  log_id: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+  driver_id: ID! @rules(apply: ["required"])
+}
+
+input ChangeSchoolTripAttendenceStatusInput {
+  date: String! @rules(apply: ["required"])
+  trip_id: ID! @rules(apply: ["required"])
+  trip_name: String! @rules(apply: ["required"])
+  user_id: ID! @rules(apply: ["required"])
+  user_name: String! @rules(apply: ["required"])
+  students: [StudnetObj] @rules(apply: ["required"])
+  is_absent: Boolean! @rules(apply: ["required"])
+  log_id: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+  driver_id: ID! @rules(apply: ["required"])
+  by: String! @rules(apply: ["required", "in:driver,user"])
+}
+
+input SelectSchoolTripStudentsInput {
+  trip_id: ID! @rules(apply: ["required"])
+  trip_name: String! @rules(apply: ["required"])
+  trip_time: String! @rules(apply: ["required"])
+  driver_id: ID! @rules(apply: ["required"])
+  log_id: String! @rules(apply: ["required"])
+  latitude: Float! @rules(apply: ["required"])
+  longitude: Float! @rules(apply: ["required"])
+  students: [StudnetObj] @rules(apply: ["required"])
+}
+
+input StudnetObj {
+  id: ID! @rules(apply: ["required"])
+  name: String! @rules(apply: ["required"])
+}
+
+type SchoolTripEvent {
+  log_id: String
+  trip_time: String
+  map_url: String
+  content: TripEventContent
+  created_at: String
+  updated_at: String
+  trip: SchoolTrip @belongsTo
+  driver: Driver @belongsTo
+  supervisor: Supervisor @belongsTo
+}

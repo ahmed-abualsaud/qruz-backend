@@ -1,0 +1,27 @@
+input CreatePromoCodeInput {
+  name: String! @rules(apply: ["required", "unique:promo_codes,name"])
+  amount: Float! @rules(apply: ["required"])
+  description: String
+  usage: Int! @rules(apply: ["required"])
+  expires_on: String! @rules(apply: ["required"])
+  type: String! @rules(apply: ["required", "in:TOSCHOOL,TOWORK,SEATS,ONDEMAND"])
+}
+
+input UpdatePromoCodeInput @validator {
+  id: ID
+  name: String
+  amount: Float
+  description: String
+  usage: Int
+  expires_on: String
+}
+
+type PromoCode {
+  id: ID
+  name: String
+  amount: Float
+  description: String
+  usage: Int
+  expires_on: String
+  type: String
+}
